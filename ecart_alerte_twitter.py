@@ -24,11 +24,11 @@ class config:
         lines = configFile.readlines()
         
         for line in lines:
-            sp = line.split('#')[0]
-            sp = sp.split('=')
+            decode = line.split('#')[0]
+            decode = decode.split('=')
             
-            if len(sp)==2:
-                self.config[sp[0].strip()] = sp[1].strip()
+            if len(decode)==2:
+                self.config[decode[0].strip()] = decode[1].strip()
                 
         configFile.close()
         
