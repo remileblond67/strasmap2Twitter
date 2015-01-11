@@ -4,7 +4,7 @@
 # eCarto : publication en continu des alertes SIRAC sur le compte Twitter de Strasbourg
 #--------------------------------------------------------------------------------------
 import sys
-import tweepy
+import twitter
 import httplib
 import json
 import urllib2
@@ -52,10 +52,11 @@ class compteTwitter:
         CONSUMER_SECRET = myConfig.val("CONSUMER_SECRET")
         ACCESS_KEY = myConfig.val("ACCESS_KEY")
         ACCESS_SECRET = myConfig.val("ACCESS_SECRET")
+
+        self.compteTwitter = twitter.Api(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET)
         
-        auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-        auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-        self.api = tweepy.API(auth)
+        userTwitter = self.compteTwitter.VerifyCredentials()
+        self.msg.liste ("Connexion au compte Twitter" + userTwitter.name + " - " + userTwitter.description)
 
         # Identification du mode de lancement
         if len(sys.argv) < 2:
@@ -121,7 +122,8 @@ class compteTwitter:
 
         if ((delai) > 86400) :
             try:
-                self.api.update_status(message[:140])
+                status = self.compteTwitter.PostUpdate(message[:140])
+                print status
                 self.msg.liste("Publication de '"+titre+"' (longueur : "+ str(len(message))+ ")")
                 self.histoTweet[message] = time.time()
             except:
