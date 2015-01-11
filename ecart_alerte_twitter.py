@@ -4,9 +4,9 @@
 # eCarto : publication en continu des alertes SIRAC sur le compte Twitter de Strasbourg
 #--------------------------------------------------------------------------------------
 import sys
-import httplib2
+import httplib
 import json
-import urllib3
+import urllib
 import pickle
 import time
 import hashlib
@@ -137,7 +137,7 @@ class fluxSirac:
         self.msg = outils()
         self.msg.liste("Ouverture du flux SIRAC")
         self.tweet = compteTwitter()
-        self.fluxJson = urllib3.urlopen('http://carto.strasmap.eu/remote.amf.json/TraficAlert.status')
+        self.fluxJson = urllib.urlopen('http://carto.strasmap.eu/remote.amf.json/TraficAlert.status')
 
     def chargeEvt(self):
         self.msg.liste("Récupération des alertes à partir du flux StrasMap")
