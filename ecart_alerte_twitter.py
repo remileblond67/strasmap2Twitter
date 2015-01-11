@@ -5,9 +5,9 @@
 #--------------------------------------------------------------------------------------
 import sys
 import twitter
-import httplib
+import httplib2
 import json
-import urllib2
+import urllib3
 import pickle
 import time
 import hashlib
@@ -136,7 +136,7 @@ class fluxSirac:
         self.msg = outils()
         self.msg.liste("Ouverture du flux SIRAC")
         self.tweet = compteTwitter()
-        self.fluxJson = urllib2.urlopen('http://carto.strasmap.eu/remote.amf.json/TraficAlert.status')
+        self.fluxJson = urllib3.urlopen('http://carto.strasmap.eu/remote.amf.json/TraficAlert.status')
 
     def chargeEvt(self):
         self.msg.liste("Récupération des alertes à partir du flux StrasMap")
@@ -158,7 +158,7 @@ class outils:
         longueur = len(message)
         marge = (self.largeur - longueur)/2 - 1
         print ("-" * self.largeur)
-        print (" " * marge + message)
+        print (" " * int(marge) + message)
         print ("-"*self.largeur)
 
     def soustitre(self, message):
