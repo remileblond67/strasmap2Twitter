@@ -173,7 +173,7 @@ class outils:
         "Message d'erreur"
         msg = "ERREUR : " + message
         print ("!" * len(msg))
-        print msg
+        print (msg)
         print ("!" * len(msg))
 
     def info(self, message):
