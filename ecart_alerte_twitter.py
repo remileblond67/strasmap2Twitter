@@ -4,13 +4,13 @@
 # eCarto : publication en continu des alertes SIRAC sur le compte Twitter de Strasbourg
 #--------------------------------------------------------------------------------------
 import sys
-import twitter
 import httplib2
 import json
 import urllib3
 import pickle
 import time
 import hashlib
+import twitter
 
 class config:
     "Lecture du fichier de configuration"
@@ -24,12 +24,13 @@ class config:
         lines = configFile.readlines()
         
         for line in lines:
-            decode = line.split('#')[0]
-            decode = decode.split('=')
-            
-            if len(decode)==2:
-                self.config[decode[0].strip()] = decode[1].strip()
-                
+            line = line.decode("utf-8")
+            ligneParam = line.split('#')[0]
+            ligneParam = ligneParam.split('=')
+
+            if len(ligneParam)==2:
+                self.config[ligneParam[0].strip()] = ligneParam[1].strip()
+
         configFile.close()
         
     def val(self, clef):
