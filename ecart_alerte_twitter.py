@@ -123,7 +123,6 @@ class compteTwitter:
         if ((delai) > 86400) :
             try:
                 status = self.compteTwitter.PostUpdate(message[:140])
-                print status
                 self.msg.liste("Publication de '"+titre+"' (longueur : "+ str(len(message))+ ")")
                 self.histoTweet[message] = time.time()
             except:
