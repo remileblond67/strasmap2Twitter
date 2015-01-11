@@ -15,7 +15,9 @@ import twitter
 class config:
     "Lecture du fichier de configuration"
     def __init__(self):
-        print ("Lecture du fichier de configuration")
+        self.msg = outils()
+
+        self.msg.info ("Lecture du fichier de configuration")
         self.config={}
         try:
             configFile = open('configTwitter.conf', 'rb')
@@ -47,7 +49,7 @@ class compteTwitter:
         
         myConfig = config()
 
-        self.msg.liste ("Initialisation de la connexion à Twitter")
+        self.msg.soustitre ("Initialisation de la connexion à Twitter")
         
         CONSUMER_KEY = myConfig.val("CONSUMER_KEY")
         CONSUMER_SECRET = myConfig.val("CONSUMER_SECRET")
@@ -57,7 +59,8 @@ class compteTwitter:
         self.compteTwitter = twitter.Api(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET)
         
         userTwitter = self.compteTwitter.VerifyCredentials()
-        self.msg.liste ("Connexion au compte Twitter" + userTwitter.name + " - " + userTwitter.description)
+        self.msg.liste ("Connexion au compte Twitter" + userTwitter.name)
+        self.msg.info (userTwitter.description)
 
         # Identification du mode de lancement
         if len(sys.argv) < 2:
@@ -117,7 +120,7 @@ class compteTwitter:
                 delai = float(time.time()) - float(self.histoTweet[message])
             except:
                 delai = 90000;
-                self.msg.info ("  Pas d'historique trouvé pour ce message")
+                self.msg.info ("Pas d'historique trouvé pour ce message")
         else:
             delai = 90000;
 
@@ -135,12 +138,12 @@ class fluxSirac:
     "Recuperation des alertes SIRAC a partir du flux StrasMap"
     def __init__(self):
         self.msg = outils()
-        self.msg.liste("Ouverture du flux SIRAC")
+        self.msg.soustitre("Ouverture du flux SIRAC")
         self.tweet = compteTwitter()
         self.fluxJson = urllib.urlopen('http://carto.strasmap.eu/remote.amf.json/TraficAlert.status')
 
     def chargeEvt(self):
-        self.msg.liste("Récupération des alertes à partir du flux StrasMap")
+        self.msg.soustitre("Récupération des alertes à partir du flux StrasMap")
         alertes = json.load(self.fluxJson)
         
         for alerte in alertes['s']:
@@ -172,14 +175,14 @@ class outils:
 
     def erreur(self, message):
         "Message d'erreur"
-        msg = "ERREUR : " + message
+        msg = "  ERREUR : " + message
         print ("!" * len(msg))
         print (msg)
         print ("!" * len(msg))
 
     def info(self, message):
         "Message d'information"
-        print ("INFO : " + message)
+        print ("  " + message)
 
     def tweet(self, message):
         "Affichage du contenu d'un Tweet"
