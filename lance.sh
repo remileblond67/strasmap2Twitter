@@ -1,1 +1,1 @@
-python /Users/remi/src/strasmap2Twitter/ecart_alerte_twitter.py cont
+python2 ./ecart_alerte_twitter.py cont
